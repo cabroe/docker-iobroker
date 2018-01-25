@@ -1,52 +1,13 @@
 # docker-iobroker
-Docker image for ioBroker (http://iobroker.net) based on debian:latest (http://hub.docker.com/_/debian/)
-
-This project creates a Docker image for running ioBroker in a Docker container. It is made for and tested on a Synology disk station with DSM 6.0.2 and Docker 1.11.2. But it should also work on other systems running Docker.<br>
-Cause the container ist based on debian:latest, it acts nearly like a full virtual machine. That makes it possible to easily add some additional dependies for some ioBroker-Adapters.
+Docker image for ioBroker (http://iobroker.net) based on alpine:latest (http://hub.docker.com/_/alpine/)
 
 ## Installation & Usage
 
-For instructions and discussion (in german) please visit ioBroker-Forum (http://forum.iobroker.net/viewtopic.php?f=17&t=5089).
+...
 
 ## Changelog
 
-### v1.1.0 (2017-12-10)
-* changed startup call to fix restart issue
-* fixed avahi startup issue
-* fixed hostname issue
-* added z-wave support
-* added logging to /opt/scripts/docker_iobroker_log.txt
-
-### v1.0.1 (2017-08-25)
-* fixed locales issue
-
-### v1.0.0 (2017-08-22)
-* moved and renamed iobroker startup script
-* disabled iobroker deamon to (hopefully) fix restart issue
-* added some maintenance scripts
-
-### v0.2.1 (2017-08-16)
-* added libfontconfig package (for iobroker.phantomjs)
-* added gnupg2 package as prerequisite for installing node version 6
-
-### v0.2.0 (2017-06-04)
-* fixed startup issue in startup.sh
-* changed node version from 4 to 6
-
-### v0.1.2 (2017-03-14)
-* added libpcap-dev package (for iobroker.amazon-dash)
-
-### v0.1.1 (2017-03-10)
-* added git package
-
-### v0.1.0 (2017-03-08)
-* moved avahi-start.sh to seperate directory
-* fixed timezone issue (sets now timezone to Europe/Berlin)
-
-### v0.0.2 (2017-03-06)
-* added support for avahi-daemon (installation and autostart)
-
-### v0.0.1 (2017-01-31)
+### v0.0.1 (2018-01-25)
 * project started / initial release
 
 ## License
@@ -75,4 +36,4 @@ SOFTWARE.
 
 ## Credits
 
-Inspired by https://github.com/MehrCurry/docker-iobroker
+Inspired by https://github.com/buanet/docker-iobroker

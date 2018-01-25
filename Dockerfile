@@ -1,37 +1,40 @@
-FROM debian:latest
+############################################################
+# Dockerfile to build ioBroker container images
+# Based on Alpine Linux
+############################################################
 
-MAINTAINER Andre Germann <info@buanet.de>
+# Set the base image to Alpine Linux witch nodejs 6
+FROM mhart/alpine-node:6
 
-ENV DEBIAN_FRONTEND noninteractive
+# File Author / Maintainer
+MAINTAINER Carsten Bröckert <cabroe@gmail.com>
 
-RUN apt-get update && apt-get install -y build-essential python apt-utils curl avahi-daemon git libpcap-dev libavahi-compat-libdnssd-dev libfontconfig gnupg2 locales procps libudev-dev unzip sudo
+################## BEGIN INSTALLATION ######################
+# Democontent
+# Ref: http://google.com
 
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash
-RUN apt-get install -y nodejs
+# Install required libraries
+RUN apk add --update alpine-sdk avahi avahi-dev bash curl eudev-dev fontconfig git gnupg libpcap-dev procps python sudo unzip
 
-RUN sed -i '/^rlimit-nproc/s/^\(.*\)/#\1/g' /etc/avahi/avahi-daemon.conf
-RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && \dpkg-reconfigure --frontend=noninteractive locales && \update-locale LANG=de_DE.UTF-8
-ENV LANG de_DE.UTF-8 
-RUN cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-
+# Create the default iobroker directories
 RUN mkdir -p /opt/iobroker/ && chmod 777 /opt/iobroker/
 RUN mkdir -p /opt/scripts/ && chmod 777 /opt/scripts/
 
+# Set workdir to /opt/scripts
 WORKDIR /opt/scripts/
 
-ADD scripts/avahi_startup.sh avahi_startup.sh
-RUN chmod +x avahi_startup.sh
-RUN mkdir /var/run/dbus/
-
+# Add scripts/iobroker_startup.sh to /opt/scripts/iobroker_startup.sh and make it executable
 ADD scripts/iobroker_startup.sh iobroker_startup.sh
 RUN chmod +x iobroker_startup.sh
 
+# Set workdir to /opt/iobroker
 WORKDIR /opt/iobroker/
 
+# Install ioBroker and write local hostname to install_host file
 RUN npm install iobroker --unsafe-perm && echo $(hostname) > .install_host
-RUN update-rc.d iobroker.sh remove
+
+# Install node-gyp for compability reasons
 RUN npm install node-gyp -g
 
+# Set script for startup ioBroker ???
 CMD ["sh", "/opt/scripts/iobroker_startup.sh"]
-
-ENV DEBIAN_FRONTEND teletype
