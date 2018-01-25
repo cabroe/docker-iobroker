@@ -14,7 +14,9 @@ MAINTAINER Carsten Bröckert <cabroe@gmail.com>
 # Ref: http://google.com
 
 # Install required libraries
-RUN apk add --update alpine-sdk avahi avahi-dev bash curl eudev-dev fontconfig git gnupg libpcap-dev procps python sudo unzip
+# RUN apk add --update alpine-sdk avahi avahi-dev bash curl eudev-dev fontconfig git gnupg libpcap-dev procps python sudo unzip
+
+RUN apk add --update --no-cache bash build-base git python sudo make tzdata xz
 
 # Create the default iobroker directories
 RUN mkdir -p /opt/iobroker/ && chmod 777 /opt/iobroker/
