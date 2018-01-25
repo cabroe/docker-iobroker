@@ -8,8 +8,5 @@ then
         rm .install_host
 fi
 
-# needed?
-sleep 5
-
 node node_modules/iobroker.js-controller/controller.js >/opt/scripts/docker_iobroker_log.txt 2>&1 &
 /bin/bash
